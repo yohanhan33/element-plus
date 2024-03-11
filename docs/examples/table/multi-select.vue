@@ -3,9 +3,9 @@
     ref="multipleTableRef"
     :data="tableData"
     style="width: 100%"
-    @selection-change="handleSelectionChange"
+    @row-click="handleRowClick"
   >
-    <el-table-column type="selection" width="55" />
+    <el-table-column type="radio" width="55" />
     <el-table-column label="Date" width="120">
       <template #default="scope">{{ scope.row.date }}</template>
     </el-table-column>
@@ -46,6 +46,13 @@ const toggleSelection = (rows?: User[]) => {
 }
 const handleSelectionChange = (val: User[]) => {
   multipleSelection.value = val
+}
+
+const handleRowClick = (row: User) => {
+  // 清除之前的选中项
+  multipleTableRef.value!.clearSelection()
+  // 选中当前行
+  multipleTableRef.value!.toggleRowSelection(row)
 }
 
 const tableData: User[] = [
